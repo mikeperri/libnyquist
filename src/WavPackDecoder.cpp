@@ -82,7 +82,7 @@ public:
         
         while (0 < framesRemaining)
         {
-            uint32_t framesRead = -1;
+            uint32_t framesRead;
             
             if (MODE_FLOAT & mode)
             {
@@ -90,12 +90,12 @@ public:
                 framesRead = WavpackUnpackSamples(context, reinterpret_cast<int32_t*>(&d->samples.data()[0]), uint32_t(d->samples.size() / d->channelCount));
             }
             
-            else if(MODE_LOSSLESS & mode)
+            else
             {
-                // Lossless files will be handed off as integers
+                // Samples are integers
                 framesRead = WavpackUnpackSamples(context, internalBuffer.data(), uint32_t(internalBuffer.size() / d->channelCount));
             }
-            
+
             // EOF
             //if (framesRead == 0) break;
 
